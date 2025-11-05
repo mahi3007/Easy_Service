@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import { Search, User, LogOut, ShoppingBag, Bell } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -61,17 +62,17 @@ export default function Navbar({ userType = "customer", searchValue, onSearchCha
   }
   
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-blue-600">ServiceHub</span>
+            <span className="text-xl font-bold text-primary">ServiceHub</span>
           </Link>
         </div>
         
         <div className="hidden md:flex md:flex-1 md:items-center md:justify-center">
           <div className="relative w-full max-w-md">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
               value={internalSearch}
@@ -85,23 +86,25 @@ export default function Navbar({ userType = "customer", searchValue, onSearchCha
                 }
               }}
               placeholder={userType === "provider" ? "Search job requests..." : "Search for services..."}
-              className="w-full bg-slate-50 pl-8 pr-4"
+              className="w-full bg-muted pl-8 pr-4"
             />
           </div>
         </div>
         
         <div className="flex items-center gap-4">
+          <ThemeToggle />
+
           {userType === "customer" && (
             <Link href="/customer/bookings">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingBag className="h-5 w-5" />
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[10px] text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
                   0
                 </span>
               </Button>
             </Link>
           )}
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
@@ -117,7 +120,7 @@ export default function Navbar({ userType = "customer", searchValue, onSearchCha
                   <p className="text-sm font-medium">
                     {user?.user_metadata?.first_name} {user?.user_metadata?.last_name}
                   </p>
-                  <p className="text-xs text-slate-500">{user?.email}</p>
+                  <p className="text-xs text-muted-foreground">{user?.email}</p>
                 </div>
               </div>
               <DropdownMenuSeparator />
